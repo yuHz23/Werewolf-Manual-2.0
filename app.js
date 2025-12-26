@@ -11,6 +11,8 @@ const ROLES = {
   SORCERER: "Pháp sư",
   GAMBLER: "Con bạc",
   PRINCE: "Hoàng tử",
+  TRAITOR: "Gián điệp",     // ✅ Dân giả Sói (Seer sees as wolf)
+  BORED: "Kẻ chán đời",     // ✅ Thắng nếu bị treo cổ
   VILLAGER: "Dân làng",
 };
 
@@ -22,9 +24,13 @@ renderAll();
 function freshState() {
   return {
     started: false,
+    gameOver: false,
+    winnerText: "",
+
     phase: "setup", // setup | night | day
     day: 0,
     night: 0,
+
     players: [], // {id,name,role,alive,trueRoleRevealed,princeSavedOnce}
 
     nightActions: {
@@ -79,6 +85,12 @@ function findPlayer(id) { return state.players.find(p => p.id === id) || null; }
 function wolves() { return state.players.filter(p => p.role === ROLES.WEREWOLF && p.alive); }
 function isRoleAlive(role) { return alivePlayers().some(p => p.role === role); }
 
+/** ✅ Seer sees "wolf" if: real wolf OR traitor (villager side) */
+function isWolfForSeer(player) {
+  if (!player) return false;
+  return player.role === ROLES.WEREWOLF || player.role === ROLES.TRAITOR;
+}
+
 function addLog(msg, kind = "info") {
   state.log.unshift({ t: new Date().toLocaleString(), msg, kind });
   renderLog();
@@ -120,8 +132,19 @@ function formatSec(s) {
   return `${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
 }
 
+function endGame(text, kind = "ok") {
+  if (state.gameOver) return;
+  state.gameOver = true;
+  state.winnerText = text;
+  stopVoteTimer();
+  addLog(`🏁 <b>GAME OVER</b> — ${text}`, kind);
+  renderAll();
+}
+
 /* ---------------- Setup: Add player ---------------- */
 $("btnAdd")?.addEventListener("click", () => {
+  if (state.gameOver) return addLog("Game đã kết thúc. Bấm New Game để chơi lại.", "warn");
+
   const name = $("inpName").value.trim();
   if (!name) return;
 
@@ -196,17 +219,15 @@ $("btnClearLog")?.addEventListener("click", () => {
 */
 $("btnStartNight")?.addEventListener("click", () => {
   if (!state.started) return addLog("Hãy thêm người chơi trước.", "warn");
+  if (state.gameOver) return addLog("Game đã kết thúc. Bấm New Game để chơi lại.", "warn");
   if (state.phase !== "night") return addLog("Bạn chỉ Start Night khi đang ở Đêm.", "warn");
 
-  // Resolve Night
   resolveNight();
+  if (state.gameOver) return;
 
-  // Sang ngày
   state.day += 1;
   setPhase("day");
   state.dayVote = null;
-
-  // stop vote timer nếu còn
   stopVoteTimer();
 
   addLog(`☀️ Bắt đầu <b>NGÀY ${state.day}</b>`, "ok");
@@ -215,19 +236,18 @@ $("btnStartNight")?.addEventListener("click", () => {
 
 $("btnStartDay")?.addEventListener("click", () => {
   if (!state.started) return addLog("Hãy thêm người chơi trước.", "warn");
+  if (state.gameOver) return addLog("Game đã kết thúc. Bấm New Game để chơi lại.", "warn");
   if (state.phase !== "day") return addLog("Bạn chỉ Start Day khi đang ở Ngày.", "warn");
 
-  // Resolve Day: nếu có timer đang chạy thì dừng
   stopVoteTimer();
 
-  // Resolve vote nếu có chọn
   if (state.dayVote) {
     resolveVote();
   } else {
     addLog("🗳️ Không có vote được chọn → bỏ qua treo cổ.", "warn");
   }
+  if (state.gameOver) return;
 
-  // Sang đêm
   state.night += 1;
   setPhase("night");
   resetNightActions();
@@ -265,6 +285,10 @@ function renderNightPanel() {
   }
   if (state.phase !== "night") {
     panel.innerHTML = `<div class="hint">Đang không phải pha Đêm.</div>`;
+    return;
+  }
+  if (state.gameOver) {
+    panel.innerHTML = `<div class="hint">Game Over: ${escapeHtml(state.winnerText)}</div>`;
     return;
   }
 
@@ -353,17 +377,23 @@ function renderNightPanel() {
   bindNightDropdown("witchPoison");
   bindNightDropdown("gamblerBet");
 
-  // Seer log ngay
+  // Seer log ngay (✅ includes traitor as wolf)
   const seerEl = document.getElementById("dd_seerCheck");
   if (seerEl) {
     seerEl.addEventListener("change", () => {
       const id = seerEl.value || null;
       state.nightActions.seerCheck = id;
       if (!id) return;
+
       const t = findPlayer(id);
       if (!t) return;
-      const res = (t.role === ROLES.WEREWOLF) ? "SÓI" : "KHÔNG PHẢI SÓI";
-      addLog(`🔮 Tiên tri soi <b>${escapeHtml(t.name)}</b> → <span class="${t.role === ROLES.WEREWOLF ? "bad" : "ok"}">${res}</span>`, "info");
+
+      const wolfish = isWolfForSeer(t);
+      const res = wolfish ? "SÓI" : "KHÔNG PHẢI SÓI";
+      addLog(
+        `🔮 Tiên tri soi <b>${escapeHtml(t.name)}</b> → <span class="${wolfish ? "bad" : "ok"}">${res}</span>`,
+        "info"
+      );
     });
   }
 }
@@ -377,6 +407,10 @@ function renderDayPanel() {
   }
   if (state.phase !== "day") {
     panel.innerHTML = `<div class="hint">Đang không phải pha Ngày.</div>`;
+    return;
+  }
+  if (state.gameOver) {
+    panel.innerHTML = `<div class="hint">Game Over: ${escapeHtml(state.winnerText)}</div>`;
     return;
   }
 
@@ -409,7 +443,7 @@ function renderDayPanel() {
         <button id="btnEndVote" class="btn danger">Kết thúc vote (resolve)</button>
       </div>
 
-      <div class="hint">Kết thúc vote sẽ xử lý Hoàng tử (lộ role + thoát 1 lần).</div>
+      <div class="hint">Kết thúc vote sẽ xử lý Hoàng tử / Kẻ chán đời.</div>
     </div>
   `;
 
@@ -447,7 +481,6 @@ function startVoteTimer() {
 }
 
 function attachVoteInterval() {
-  // do not stopVoteTimer() here because it would reset endsAt
   if (voteInterval) clearInterval(voteInterval);
 
   voteInterval = setInterval(() => {
@@ -578,6 +611,14 @@ function resolveVote() {
     return;
   }
 
+  // ✅ Kẻ chán đời: thắng nếu bị treo cổ
+  if (t.role === ROLES.BORED) {
+    killPlayer(t.id, `🗳️ Bị treo cổ: <b>${escapeHtml(t.name)}</b>`);
+    state.dayVote = null;
+    endGame(`😵 <b>${escapeHtml(t.name)}</b> là <b>Kẻ chán đời</b> → THẮNG vì bị treo cổ!`, "ok");
+    return;
+  }
+
   // Prince: reveal + survive once
   if (t.role === ROLES.PRINCE) {
     if (!t.princeSavedOnce) {
@@ -596,18 +637,20 @@ function resolveVote() {
 }
 
 function checkWin() {
-  const aliveW = wolves().length;
+  if (state.gameOver) return;
+
+  const aliveW = wolves().length; // ✅ chỉ Sói thật
   const aliveTotal = alivePlayers().length;
   const aliveV = aliveTotal - aliveW;
 
   if (!state.started) return;
 
   if (aliveW <= 0) {
-    addLog(`🏁 <span class="ok">DÂN THẮNG!</span> (Không còn Sói sống)`, "ok");
+    endGame(`<span class="ok">DÂN THẮNG!</span> (Không còn Sói sống)`, "ok");
     return;
   }
   if (aliveW >= aliveV) {
-    addLog(`🏁 <span class="bad">SÓI THẮNG!</span> (Sói >= Dân)`, "bad");
+    endGame(`<span class="bad">SÓI THẮNG!</span> (Sói >= Dân)`, "bad");
     return;
   }
 }
@@ -666,7 +709,9 @@ function renderPhasePill() {
     night: `Đêm ${state.night}`,
     day: `Ngày ${state.day}`,
   };
-  $("phasePill").textContent = map[state.phase] || state.phase;
+  let txt = map[state.phase] || state.phase;
+  if (state.gameOver) txt = "GAME OVER";
+  $("phasePill").textContent = txt;
 }
 
 function renderLog() {
