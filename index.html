@@ -46,13 +46,12 @@
             <option value="Hoàng tử">👑 Hoàng tử</option>
 
             <option value="Con Lai">🧬 Con Lai (bị cắn → hóa Sói nếu không cứu/bảo vệ)</option>
-
             <option value="Kẻ chán đời">😵 Kẻ chán đời (thắng nếu bị treo cổ)</option>
             <option value="Dân làng">🧑 Dân làng</option>
           </select>
 
           <button id="btnAdd" class="btn primary full">Add</button>
-          <div class="hint">Tip: Add xong là chơi luôn (không dùng random role).</div>
+          <div class="hint">Không dùng random role. Add xong chơi luôn.</div>
         </div>
       </section>
 
@@ -70,10 +69,10 @@
         <div class="card-hd">
           <h2>3) Night</h2>
           <div class="inline">
-            <button id="btnStartNight" class="btn primary">Start Night (Resolve Night)</button>
+            <!-- ✅ đúng: Start Night -->
+            <button id="btnStartNight" class="btn primary">Start Night</button>
           </div>
         </div>
-
         <div class="row">
           <div class="col">
             <div class="kpis">
@@ -83,7 +82,6 @@
             </div>
           </div>
         </div>
-
         <div id="nightPanel" class="panel"></div>
       </section>
 
@@ -92,10 +90,10 @@
         <div class="card-hd">
           <h2>4) Day / Voting</h2>
           <div class="inline">
-            <button id="btnStartDay" class="btn primary">Start Day (Resolve Day)</button>
+            <!-- ✅ đúng: Start Day -->
+            <button id="btnStartDay" class="btn primary">Start Day</button>
           </div>
         </div>
-
         <div id="dayPanel" class="panel"></div>
       </section>
 
@@ -107,7 +105,6 @@
             <button id="btnClearLog" class="btn danger ghost">Clear Log</button>
           </div>
         </div>
-
         <div id="logBox" class="log"></div>
       </section>
     </main>
