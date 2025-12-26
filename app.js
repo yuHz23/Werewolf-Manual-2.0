@@ -11,7 +11,7 @@ const ROLES = {
   SORCERER: "Pháp sư",
   GAMBLER: "Con bạc",
   PRINCE: "Hoàng tử",
-  TRAITOR: "Gián điệp",     // ✅ Dân giả Sói (Seer sees as wolf)
+  TRAITOR: "Con lai",     // ✅ Dân giả Sói (Seer sees as wolf)
   BORED: "Kẻ chán đời",     // ✅ Thắng nếu bị treo cổ
   VILLAGER: "Dân làng",
 };
