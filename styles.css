@@ -1,0 +1,331 @@
+:root{
+  --bg:#0b1020;
+  --muted:#98a2b3;
+  --text:#e5e7eb;
+  --line:rgba(255,255,255,.08);
+  --primary:#7c3aed;
+  --danger:#ef4444;
+  --ok:#22c55e;
+  --warn:#f59e0b;
+
+  --selectBg:#0b1227;
+  --selectBg2:#0a1022;
+  --selectText:#e5e7eb;
+  --selectPlaceholder:#94a3b8;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(124,58,237,.35), transparent 60%),
+              radial-gradient(900px 500px at 120% 0%, rgba(34,197,94,.2), transparent 55%),
+              var(--bg);
+  color:var(--text);
+}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+h1{margin:0;font-size:22px}
+.sub{margin:6px 0 0;color:var(--muted);font-size:13px}
+.badge{font-size:12px;padding:3px 8px;border:1px solid var(--line);border-radius:999px;margin-left:6px;color:#ddd}
+.top-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:12px;
+  box-shadow:0 20px 40px rgba(0,0,0,.35);
+}
+.card.wide{grid-column:1 / -1}
+.card-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.card-hd h2{margin:0;font-size:16px}
+.pill{
+  padding:6px 10px;border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.03);
+  font-size:12px;color:#ddd
+}
+
+.row{margin-top:10px}
+label{display:block;font-size:12px;color:#cbd5e1;margin-bottom:6px}
+.inline{display:flex;gap:8px;align-items:center}
+.mt8{margin-top:8px}
+.hint{margin-top:8px;color:var(--muted);font-size:12px}
+.tiny{font-size:12px}
+.muted{color:var(--muted)}
+
+input, select{
+  width:100%;
+  padding:10px 10px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:rgba(0,0,0,.2);
+  color:var(--text);
+  outline:none;
+}
+select{cursor:pointer}
+
+/* ✅ Fix dropdown: nền tối + chữ rõ + placeholder rõ
+   Lưu ý: style <option> tùy browser, nhưng Chrome/Edge sẽ ổn. */
+select{
+  background: linear-gradient(180deg, var(--selectBg), var(--selectBg2));
+  color: var(--selectText);
+  color-scheme: dark;
+}
+select option{
+  background: #0b1227;
+  color: #e5e7eb;
+}
+select option[value=""]{
+  color: var(--selectPlaceholder);
+}
+
+.btn{
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.05);
+  color:var(--text);
+  cursor:pointer;
+  font-weight:600;
+}
+.btn:hover{filter:brightness(1.1)}
+.btn.primary{background:rgba(124,58,237,.25);border-color:rgba(124,58,237,.55)}
+.btn.danger{background:rgba(239,68,68,.20);border-color:rgba(239,68,68,.5)}
+.btn.ghost{background:transparent}
+.btn.full{width:100%; margin-top:12px;}
+
+.players{display:flex;flex-direction:column;gap:8px}
+.pitem{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.12);
+  cursor:pointer;
+}
+.pname{font-weight:700}
+.ptags{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.tag{
+  font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:#ddd;
+  background:rgba(255,255,255,.03)
+}
+.tag.dead{border-color:rgba(239,68,68,.6);color:#ffd1d1}
+.tag.alive{border-color:rgba(34,197,94,.55);color:#d6ffe6}
+.tag.role{border-color:rgba(124,58,237,.55)}
+.tag.reveal{border-color:rgba(245,158,11,.55);color:#fff1c2}
+
+.panel{
+  border:1px dashed var(--line);
+  border-radius:14px;
+  padding:10px;
+  background:rgba(0,0,0,.10);
+  min-height:80px;
+}
+.block{padding:10px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.12);margin-bottom:10px}
+.block h3{margin:0 0 8px;font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpi{border:1px solid var(--line);border-radius:14px;padding:10px;background:rgba(0,0,0,.12)}
+.kpi .k{font-size:11px;color:var(--muted)}
+.kpi .v{font-size:18px;font-weight:800;margin-top:2px}
+
+.log{
+  max-height:280px;overflow:auto;
+  border-radius:14px;
+  padding:10px;
+  background:rgba(0,0,0,.18);
+  border:1px solid var(--line);
+}
+.logline{padding:8px;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
+.logline:last-child{border-bottom:none}
+.ok{color:var(--ok);font-weight:700}
+.bad{color:var(--danger);font-weight:700}
+.warn{color:var(--warn);font-weight:700}
+
+.foot{margin-top:12px;text-align:center}
+
+.dlg::backdrop{background:rgba(0,0,0,.55)}
+.dlg{border:none;background:transparent}
+.dlgBox{
+  width:min(520px, calc(100vw - 24px));
+  border-radius:16px;
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border:1px solid var(--line);
+  box-shadow:0 30px 70px rgba(0,0,0,.6);
+  padding:14px;
+  color:var(--text);
+}
+.dlgBox h3{margin:0 0 8px}
+.dlgBody{color:#d1d5db;font-size:14px;line-height:1.45}
+.dlgActions{display:flex;justify-content:flex-end;margin-top:12px}
+
+/* Add Player UI */
+.addbox{
+  background: rgba(0,0,0,.18);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  padding: 14px;
+}
+.addtitle{
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 800;
+}
+.addlabel{
+  margin-top: 10px;
+  font-size: 12px;
+  color: #cbd5e1;
+}
+.addinput, .addselect{
+  margin-top: 6px;
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(2,6,23,.65);
+  color: #e5e7eb;
+  outline: none;
+}
+.addselect{
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #94a3b8 50%),
+    linear-gradient(135deg, #94a3b8 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(1em + 6px),
+    calc(100% - 12px) calc(1em + 6px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 36px;
+}
+
+@media (max-width: 980px){
+  .grid{grid-template-columns:1fr}
+  .card.wide{grid-column:auto}
+}
+/* ===== Mobile UI Optimize ===== */
+:root{
+  --tap: 44px;              /* chuẩn tap target */
+  --radius: 18px;
+}
+
+html, body{
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+.wrap{
+  padding: 14px;
+  padding-bottom: calc(14px + env(safe-area-inset-bottom));
+}
+
+.top{
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.top-actions{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+.top-actions .btn{
+  width: 100%;
+  min-height: var(--tap);
+}
+
+h1{ font-size: 20px; }
+.sub{ font-size: 13px; line-height: 1.35; }
+
+.grid{
+  grid-template-columns: 1fr; /* 1 cột trên mobile */
+}
+
+.card{
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.card-hd{
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+.card-hd .inline{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr; /* nút thành 1 hàng full */
+  gap: 8px;
+}
+.card-hd .btn{
+  width: 100%;
+  min-height: var(--tap);
+}
+
+.btn{
+  min-height: var(--tap);
+  font-size: 15px;
+}
+input, select{
+  min-height: var(--tap);
+  font-size: 16px; /* iOS: tránh auto zoom */
+}
+
+.addbox{
+  border-radius: var(--radius);
+}
+.addinput, .addselect{
+  min-height: var(--tap);
+  font-size: 16px;
+}
+
+/* Players list: dễ bấm hơn */
+.pitem{
+  padding: 12px;
+}
+.pname{
+  font-size: 16px;
+}
+.ptags{
+  gap: 6px;
+}
+
+/* KPI 1 hàng hoặc 2 hàng tùy màn */
+.kpis{
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 420px){
+  .kpis{ grid-template-columns: 1fr 1fr; }
+}
+
+/* Block + dropdown spacing */
+.block{
+  border-radius: var(--radius);
+}
+.block h3{
+  font-size: 14px;
+}
+.grid2{
+  grid-template-columns: 1fr; /* 2 cột -> 1 cột mobile */
+}
+
+/* Log: cao hơn chút để đọc */
+.log{
+  max-height: 360px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Sticky action bar (tuỳ chọn): giữ nút Start Day/Night luôn thấy */
+.stickybar{
+  position: sticky;
+  top: 10px;
+  z-index: 10;
+  background: rgba(11,16,32,.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius);
+  padding: 10px;
+}

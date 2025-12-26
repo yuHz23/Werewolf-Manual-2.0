@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Werewolf Manual 2.0</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div>
+        <h1>🐺 Werewolf Manual <span class="badge">2.0</span></h1>
+        <p class="sub">Host tool (offline) – role dropdown – night/day flow</p>
+      </div>
+
+      <div class="top-actions">
+        <button id="btnNew" class="btn danger">New Game</button>
+        <button id="btnSave" class="btn">Save</button>
+        <button id="btnLoad" class="btn">Load</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <!-- SETUP -->
+      <section class="card">
+        <div class="card-hd">
+          <h2>1) Setup</h2>
+          <div class="pill" id="phasePill">Chưa bắt đầu</div>
+        </div>
+
+        <!-- ADD PLAYER UI -->
+        <div class="addbox">
+          <h3 class="addtitle">Thêm người chơi</h3>
+
+          <label class="addlabel" for="inpName">Tên người chơi</label>
+          <input id="inpName" class="addinput" placeholder="Tên người chơi" />
+
+          <label class="addlabel" for="selRole">Chọn role</label>
+          <select id="selRole" class="addselect">
+            <option value="Sói">🐺 Sói</option>
+            <option value="Tiên tri">🔮 Tiên tri</option>
+            <option value="Phù thủy">🧪 Phù thủy</option>
+            <option value="Bảo vệ">🛡️ Bảo vệ</option>
+            <option value="Pháp sư">🧙 Pháp sư</option>
+            <option value="Con bạc">🎲 Con bạc</option>
+            <option value="Hoàng tử">👑 Hoàng tử</option>
+            <option value="Dân làng">🧑 Dân làng</option>
+          </select>
+
+          <button id="btnAdd" class="btn primary full">Add</button>
+          <div class="hint">Tip: Add xong là chơi luôn (không dùng random role).</div>
+        </div>
+      </section>
+
+      <!-- PLAYERS -->
+      <section class="card">
+        <div class="card-hd">
+          <h2>2) Players</h2>
+          <div class="tiny muted">Click player để host xem role</div>
+        </div>
+        <div id="playersList" class="players"></div>
+      </section>
+
+      <!-- NIGHT ACTIONS -->
+      <section class="card">
+        <div class="card-hd">
+          <h2>3) Night</h2>
+          <div class="inline">
+            <!-- Start Day = Resolve Night -->
+            <button id="btnStartDay" class="btn primary">Start Night </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div class="kpis">
+              <div class="kpi"><div class="k">Day</div><div class="v" id="kDay">0</div></div>
+              <div class="kpi"><div class="k">Night</div><div class="v" id="kNight">0</div></div>
+              <div class="kpi"><div class="k">Alive</div><div class="v" id="kAlive">0</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="nightPanel" class="panel"></div>
+      </section>
+
+      <!-- DAY / VOTE -->
+      <section class="card">
+        <div class="card-hd">
+          <h2>4) Day / Voting</h2>
+          <div class="inline">
+            <!-- Start Night = Resolve Day -->
+            <button id="btnStartNight" class="btn primary">Start Day</button>
+          </div>
+        </div>
+
+        <div id="dayPanel" class="panel"></div>
+      </section>
+
+      <!-- LOG -->
+      <section class="card wide">
+        <div class="card-hd">
+          <h2>5) Log</h2>
+          <div class="inline">
+            <button id="btnClearLog" class="btn danger ghost">Clear Log</button>
+          </div>
+        </div>
+
+        <div id="logBox" class="log"></div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span class="muted tiny">GitHub Pages • Offline localStorage • Werewolf Manual 2.0</span>
+    </footer>
+  </div>
+
+  <dialog id="dlgRole" class="dlg">
+    <div class="dlgBox">
+      <h3 id="dlgTitle">Role</h3>
+      <div id="dlgBody" class="dlgBody"></div>
+      <div class="dlgActions">
+        <button id="dlgClose" class="btn primary">OK</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="./app.js"></script>
+</body>
+</html>
