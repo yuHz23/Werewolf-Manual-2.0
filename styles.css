@@ -12,9 +12,16 @@
   --selectBg2:#0a1022;
   --selectText:#e5e7eb;
   --selectPlaceholder:#94a3b8;
+
+  --tap: 44px;
+  --radius: 18px;
 }
 
 *{box-sizing:border-box}
+html, body{
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+}
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
@@ -23,26 +30,58 @@ body{
               var(--bg);
   color:var(--text);
 }
-.wrap{max-width:1100px;margin:0 auto;padding:16px}
-.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
-h1{margin:0;font-size:22px}
-.sub{margin:6px 0 0;color:var(--muted);font-size:13px}
-.badge{font-size:12px;padding:3px 8px;border:1px solid var(--line);border-radius:999px;margin-left:6px;color:#ddd}
-.top-actions{display:flex;gap:8px;flex-wrap:wrap}
 
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wrap{
+  max-width:1100px;
+  margin:0 auto;
+  padding:14px;
+  padding-bottom: calc(14px + env(safe-area-inset-bottom));
+}
+
+.top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+h1{margin:0;font-size:22px}
+.sub{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
+.badge{font-size:12px;padding:3px 8px;border:1px solid var(--line);border-radius:999px;margin-left:6px;color:#ddd}
+
+.top-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
 .card{
   background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
   border:1px solid var(--line);
-  border-radius:16px;
+  border-radius:var(--radius);
   padding:12px;
   box-shadow:0 20px 40px rgba(0,0,0,.35);
 }
 .card.wide{grid-column:1 / -1}
-.card-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+
+.card-hd{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
 .card-hd h2{margin:0;font-size:16px}
+
 .pill{
-  padding:6px 10px;border-radius:999px;
+  padding:6px 10px;
+  border-radius:999px;
   border:1px solid var(--line);
   background:rgba(255,255,255,.03);
   font-size:12px;color:#ddd
@@ -51,10 +90,9 @@ h1{margin:0;font-size:22px}
 .row{margin-top:10px}
 label{display:block;font-size:12px;color:#cbd5e1;margin-bottom:6px}
 .inline{display:flex;gap:8px;align-items:center}
-.mt8{margin-top:8px}
-.hint{margin-top:8px;color:var(--muted);font-size:12px}
 .tiny{font-size:12px}
 .muted{color:var(--muted)}
+.hint{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.35}
 
 input, select{
   width:100%;
@@ -64,11 +102,12 @@ input, select{
   background:rgba(0,0,0,.2);
   color:var(--text);
   outline:none;
+  min-height: var(--tap);
+  font-size: 16px; /* iOS tránh zoom */
 }
 select{cursor:pointer}
 
-/* ✅ Fix dropdown: nền tối + chữ rõ + placeholder rõ
-   Lưu ý: style <option> tùy browser, nhưng Chrome/Edge sẽ ổn. */
+/* ✅ Fix dropdown: nền tối + chữ rõ */
 select{
   background: linear-gradient(180deg, var(--selectBg), var(--selectBg2));
   color: var(--selectText);
@@ -89,7 +128,9 @@ select option[value=""]{
   background:rgba(255,255,255,.05);
   color:var(--text);
   cursor:pointer;
-  font-weight:600;
+  font-weight:700;
+  min-height: var(--tap);
+  font-size: 15px;
 }
 .btn:hover{filter:brightness(1.1)}
 .btn.primary{background:rgba(124,58,237,.25);border-color:rgba(124,58,237,.55)}
@@ -100,10 +141,10 @@ select option[value=""]{
 .players{display:flex;flex-direction:column;gap:8px}
 .pitem{
   display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:10px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.12);
+  padding:12px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.12);
   cursor:pointer;
 }
-.pname{font-weight:700}
+.pname{font-weight:800;font-size:16px}
 .ptags{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .tag{
   font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:#ddd;
@@ -121,26 +162,36 @@ select option[value=""]{
   background:rgba(0,0,0,.10);
   min-height:80px;
 }
-.block{padding:10px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.12);margin-bottom:10px}
+
+.block{
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:rgba(0,0,0,.12);
+  margin-bottom:10px
+}
 .block h3{margin:0 0 8px;font-size:13px}
+
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .kpi{border:1px solid var(--line);border-radius:14px;padding:10px;background:rgba(0,0,0,.12)}
 .kpi .k{font-size:11px;color:var(--muted)}
-.kpi .v{font-size:18px;font-weight:800;margin-top:2px}
+.kpi .v{font-size:18px;font-weight:900;margin-top:2px}
 
 .log{
-  max-height:280px;overflow:auto;
+  max-height:360px;overflow:auto;
   border-radius:14px;
   padding:10px;
   background:rgba(0,0,0,.18);
   border:1px solid var(--line);
+  -webkit-overflow-scrolling: touch;
 }
-.logline{padding:8px;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
+.logline{padding:8px;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;line-height:1.35}
 .logline:last-child{border-bottom:none}
-.ok{color:var(--ok);font-weight:700}
-.bad{color:var(--danger);font-weight:700}
-.warn{color:var(--warn);font-weight:700}
+.ok{color:var(--ok);font-weight:800}
+.bad{color:var(--danger);font-weight:800}
+.warn{color:var(--warn);font-weight:800}
 
 .foot{margin-top:12px;text-align:center}
 
@@ -163,13 +214,13 @@ select option[value=""]{
 .addbox{
   background: rgba(0,0,0,.18);
   border: 1px solid rgba(255,255,255,.08);
-  border-radius: 18px;
+  border-radius: var(--radius);
   padding: 14px;
 }
 .addtitle{
   margin: 0 0 10px;
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 900;
 }
 .addlabel{
   margin-top: 10px;
@@ -201,131 +252,29 @@ select option[value=""]{
   padding-right: 36px;
 }
 
+/* ===== Mobile optimize ===== */
 @media (max-width: 980px){
   .grid{grid-template-columns:1fr}
   .card.wide{grid-column:auto}
-}
-/* ===== Mobile UI Optimize ===== */
-:root{
-  --tap: 44px;              /* chuẩn tap target */
-  --radius: 18px;
-}
-
-html, body{
-  height: 100%;
-  -webkit-text-size-adjust: 100%;
-}
-
-.wrap{
-  padding: 14px;
-  padding-bottom: calc(14px + env(safe-area-inset-bottom));
-}
-
-.top{
-  flex-direction: column;
-  align-items: stretch;
+  .top{flex-direction: column; align-items: stretch;}
+  .top-actions{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+  .top-actions .btn{width:100%;}
+  .card-hd{flex-direction: column; align-items: stretch;}
+  .card-hd .inline{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .card-hd .btn{width:100%;}
+  .grid2{grid-template-columns:1fr;}
 }
 
-.top-actions{
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-}
-.top-actions .btn{
-  width: 100%;
-  min-height: var(--tap);
-}
-
-h1{ font-size: 20px; }
-.sub{ font-size: 13px; line-height: 1.35; }
-
-.grid{
-  grid-template-columns: 1fr; /* 1 cột trên mobile */
-}
-
-.card{
-  border-radius: var(--radius);
-  padding: 12px;
-}
-
-.card-hd{
-  flex-direction: column;
-  align-items: stretch;
-  gap: 8px;
-}
-.card-hd .inline{
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr; /* nút thành 1 hàng full */
-  gap: 8px;
-}
-.card-hd .btn{
-  width: 100%;
-  min-height: var(--tap);
-}
-
-.btn{
-  min-height: var(--tap);
-  font-size: 15px;
-}
-input, select{
-  min-height: var(--tap);
-  font-size: 16px; /* iOS: tránh auto zoom */
-}
-
-.addbox{
-  border-radius: var(--radius);
-}
-.addinput, .addselect{
-  min-height: var(--tap);
-  font-size: 16px;
-}
-
-/* Players list: dễ bấm hơn */
-.pitem{
-  padding: 12px;
-}
-.pname{
-  font-size: 16px;
-}
-.ptags{
-  gap: 6px;
-}
-
-/* KPI 1 hàng hoặc 2 hàng tùy màn */
-.kpis{
-  grid-template-columns: repeat(3, 1fr);
-}
 @media (max-width: 420px){
-  .kpis{ grid-template-columns: 1fr 1fr; }
-}
-
-/* Block + dropdown spacing */
-.block{
-  border-radius: var(--radius);
-}
-.block h3{
-  font-size: 14px;
-}
-.grid2{
-  grid-template-columns: 1fr; /* 2 cột -> 1 cột mobile */
-}
-
-/* Log: cao hơn chút để đọc */
-.log{
-  max-height: 360px;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Sticky action bar (tuỳ chọn): giữ nút Start Day/Night luôn thấy */
-.stickybar{
-  position: sticky;
-  top: 10px;
-  z-index: 10;
-  background: rgba(11,16,32,.75);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: var(--radius);
-  padding: 10px;
+  .kpis{grid-template-columns:1fr 1fr;}
 }
