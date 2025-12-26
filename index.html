@@ -29,7 +29,6 @@
           <div class="pill" id="phasePill">Chưa bắt đầu</div>
         </div>
 
-        <!-- ADD PLAYER UI -->
         <div class="addbox">
           <h3 class="addtitle">Thêm người chơi</h3>
 
@@ -46,10 +45,9 @@
             <option value="Con bạc">🎲 Con bạc</option>
             <option value="Hoàng tử">👑 Hoàng tử</option>
 
-            <!-- ✅ role mới -->
-            <option value="Con lai">🕵️ Con lai</option>
-            <option value="Kẻ chán đời">😵 Kẻ chán đời</option>
+            <option value="Con Lai">🧬 Con Lai (bị cắn → hóa Sói nếu không cứu/bảo vệ)</option>
 
+            <option value="Kẻ chán đời">😵 Kẻ chán đời (thắng nếu bị treo cổ)</option>
             <option value="Dân làng">🧑 Dân làng</option>
           </select>
 
@@ -67,12 +65,11 @@
         <div id="playersList" class="players"></div>
       </section>
 
-      <!-- NIGHT ACTIONS -->
+      <!-- NIGHT -->
       <section class="card">
         <div class="card-hd">
           <h2>3) Night</h2>
           <div class="inline">
-            <!-- Start Night = Resolve Night -> sang Day -->
             <button id="btnStartNight" class="btn primary">Start Night (Resolve Night)</button>
           </div>
         </div>
@@ -90,12 +87,11 @@
         <div id="nightPanel" class="panel"></div>
       </section>
 
-      <!-- DAY / VOTE -->
+      <!-- DAY -->
       <section class="card">
         <div class="card-hd">
           <h2>4) Day / Voting</h2>
           <div class="inline">
-            <!-- Start Day = Resolve Day -> sang Night -->
             <button id="btnStartDay" class="btn primary">Start Day (Resolve Day)</button>
           </div>
         </div>
