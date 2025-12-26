@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Werewolf Manual 2.0</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
@@ -45,6 +45,11 @@
             <option value="Pháp sư">🧙 Pháp sư</option>
             <option value="Con bạc">🎲 Con bạc</option>
             <option value="Hoàng tử">👑 Hoàng tử</option>
+
+            <!-- ✅ role mới -->
+            <option value="Con lai">🕵️ Gián điệp (Dân giả Sói)</option>
+            <option value="Kẻ chán đời">😵 Kẻ chán đời (thắng nếu bị treo cổ)</option>
+
             <option value="Dân làng">🧑 Dân làng</option>
           </select>
 
@@ -67,8 +72,8 @@
         <div class="card-hd">
           <h2>3) Night</h2>
           <div class="inline">
-            <!-- Start Day = Resolve Night -->
-            <button id="btnStartDay" class="btn primary">Start Night </button>
+            <!-- Start Night = Resolve Night -> sang Day -->
+            <button id="btnStartNight" class="btn primary">Start Night (Resolve Night)</button>
           </div>
         </div>
 
@@ -90,8 +95,8 @@
         <div class="card-hd">
           <h2>4) Day / Voting</h2>
           <div class="inline">
-            <!-- Start Night = Resolve Day -->
-            <button id="btnStartNight" class="btn primary">Start Day</button>
+            <!-- Start Day = Resolve Day -> sang Night -->
+            <button id="btnStartDay" class="btn primary">Start Day (Resolve Day)</button>
           </div>
         </div>
 
