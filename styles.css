@@ -103,11 +103,11 @@ input, select{
   color:var(--text);
   outline:none;
   min-height: var(--tap);
-  font-size: 16px; /* iOS tránh zoom */
+  font-size: 16px;
 }
 select{cursor:pointer}
 
-/* ✅ Fix dropdown: nền tối + chữ rõ */
+/* dropdown rõ */
 select{
   background: linear-gradient(180deg, var(--selectBg), var(--selectBg2));
   color: var(--selectText);
@@ -210,7 +210,6 @@ select option[value=""]{
 .dlgBody{color:#d1d5db;font-size:14px;line-height:1.45}
 .dlgActions{display:flex;justify-content:flex-end;margin-top:12px}
 
-/* Add Player UI */
 .addbox{
   background: rgba(0,0,0,.18);
   border: 1px solid rgba(255,255,255,.08);
@@ -252,7 +251,7 @@ select option[value=""]{
   padding-right: 36px;
 }
 
-/* ===== Mobile optimize ===== */
+/* Mobile */
 @media (max-width: 980px){
   .grid{grid-template-columns:1fr}
   .card.wide{grid-column:auto}
@@ -274,7 +273,6 @@ select option[value=""]{
   .card-hd .btn{width:100%;}
   .grid2{grid-template-columns:1fr;}
 }
-
 @media (max-width: 420px){
   .kpis{grid-template-columns:1fr 1fr;}
 }
